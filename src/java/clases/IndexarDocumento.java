@@ -115,6 +115,20 @@ public class IndexarDocumento {
         writer.close();
         directory.close();
     }
+    
+    public void eliminarDocumento(String ruta) throws IOException{
+        directory = FSDirectory.open(new File(ruta));
+        IndexWriter writer = getWriter();
+        writer.deleteDocuments(new Term("id", "" + documento.getId()));
+    }
+    
+    public void vaciarRepositorio(String ruta) throws IOException{
+         directory = FSDirectory.open(new File(ruta));
+         IndexWriter writer = getWriter();
+         writer.deleteAll();
+         writer.close();
+         directory.close();
+    }
 
     public void crearIndice(String ruta) throws IOException {
         directory = FSDirectory.open(new File(ruta));
@@ -127,8 +141,7 @@ public class IndexarDocumento {
     
     public static void main(String arg[]) throws IOException{
         IndexarDocumento doc=new IndexarDocumento();
-        doc.crearIndice("/home/mateo/nuevo");
-        doc.cerrar();
+        doc.vaciarRepositorio("/home/mateo/repositorio");
     }
 
 }

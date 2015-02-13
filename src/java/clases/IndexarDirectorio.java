@@ -9,8 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.index.IndexWriter;
+
 
 /**
  *

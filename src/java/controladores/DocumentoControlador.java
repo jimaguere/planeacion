@@ -353,6 +353,20 @@ public class DocumentoControlador {
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Al Crear Documento ", ""));
         }
     }
+    
+    public void eliminarDocumento(Documento documento){
+        try{
+            this.docuemntoFacade.remove(documento);
+            IndexarDocumento index = new IndexarDocumento();
+            index.setDocumento(documento);
+            index.eliminarDocumento(ruta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Documento Eliminado", ""));
+        }catch(Exception e){
+            FacesContext.getCurrentInstance().
+                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Al Eliminar DOcumento ", ""));
+        }
+        
+    }
 
     public void sig() {
         if (cambio) {
