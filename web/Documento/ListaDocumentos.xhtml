@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../Plantilla.xhtml">
+
+            <ui:define name="content">
+                <p:panel rendered="#{!repositorioControlador.repositorio}">
+                    <center>
+                        <h1>El sitio no esta disponible</h1>
+                    </center>
+                </p:panel>
+                <p:panel header="Lista Documentos" rendered="#{repositorioControlador.repositorio}">
+                    <h:form id="form">
+                        <p:growl id="msgs" showDetail="true"/>
+                        <center>
+                            <div style="width: 80%">
+                                <h:panelGrid columns="3">
+                                    <h:outputText value="#{documentoControlador.limite} de #{documentoControlador.sup}" />
+                                    <p:commandButton
+                                        value="Siguiente"                     
+                                        ajax="true"
+                                        actionListener="#{documentoControlador.sig}"  
+                                        disabled="#{!(documentoControlador.sup>documentoControlador.li)}"
+                                        update=":form"
+                                        />
+                                    <p:commandButton
+                                        value="Anterior"                     
+                                        ajax="true"
+                                        actionListener="#{documentoControlador.ant}"  
+                                        disabled="#{!(documentoControlador.limite>10)}"
+                                        update=":form"
+                                        />
+                                    <p:dataGrid value="#{documentoControlador.listaDocumentos}" var="item" columns="1" rows="10">
+                                        <p:panel >
+                                            <h:panelGrid columns="2">
+                                                <h:outputText value="Título:"/>
+                                                <h:commandLink value="#{item.titulo}" title="#{item.id}" action="#{documentoControlador.asignarDocumento(item)}"/>
+                                                <h:outputText value="Autor(s):"/>
+                                                <h:outputText value="#{item.autores}"/>
+                                            </h:panelGrid>
+                                        </p:panel> 
+                                    </p:dataGrid>
+                                </h:panelGrid>
+                            </div>
+                        </center>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

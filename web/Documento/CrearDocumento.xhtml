@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='iso-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+        <h:head>
+            <meta content='text/html; charset=iso-8859-1' http-equiv="Content-Type"/>
+        </h:head>
+        <ui:composition template="./../Plantilla.xhtml">
+
+            <ui:define name="content">
+                <h:form id="form">
+                    <p:growl id="msgs" showDetail="true"/>
+                    <p:panel rendered="#{!repositorioControlador.repositorio}">
+                            <center>
+                                <h1>El sitio no esta disponible</h1>
+                            </center>
+                    </p:panel>
+                    <p:wizard flowListener="#{documentoControlador.onFlowProcess}" rendered="#{repositorioControlador.repositorio}"
+                              nextLabel="Siguiente" backLabel="Atras"> 
+                        <p:tab id="cargar" title="Subir Documento">
+                            <p:panel header="Cargar Archvio">
+                                <p:messages id="ms" />
+                                <p:fileUpload fileUploadListener="#{documentoControlador.handleFileUpload}" 
+                                              mode="advanced" dragDropSupport="false"  required="true"
+                                              label="Adjuntar" invalidFileMessage="Archivo invalido"
+                                              cancelLabel="Cancelar" uploadLabel="Cargar"
+                                              invalidSizeMessage="Archivo supera el limite permitido"
+                                              style="width:80%;" requiredMessage="Seleccione un archivo"
+                                              update="ms" sizeLimit="100000000"  allowTypes="/(\.|\/)(pdf|PDF)$/" />   
+                            </p:panel>
+                        </p:tab>
+                        <p:tab id="info_doc" title="Información Documento">
+                            <p:panel header="Documento">
+                                <p:panelGrid columns="2">
+                                    <h:outputLabel value="Título :"/>
+                                    <p:inputTextarea value="#{documentoControlador.titulo}"   autoResize="false" rows="5" cols="100" style="color: black;text-align: justify;"
+                                                     required="true"
+                                                     requiredMessage="Título campo requerido"/>                                
+                                    <h:outputLabel value="Contenido :"/>
+                                    <p:inputTextarea value="#{documentoControlador.contenido}" autoResize="false" rows="15" cols="100" style="color: black;text-align: justify;"
+                                                     rendered="true" required="true" requiredMessage="Contenido campo requerido"/>                           
+                                </p:panelGrid>
+                            </p:panel>
+                        </p:tab>
+                        <p:tab title="Información Autores Documento">   
+                            <p:panel header="Autor(s)">
+                                <h:panelGrid columns="1">
+                                    <p:commandButton value="Adicionar Autor" 
+                                                     action="#{documentoControlador.nuevoAutor}"
+                                                     update="form:tAutor"/>
+                                </h:panelGrid>
+                                <p:dataTable value="#{documentoControlador.listaAutor}" var="aut" style="width: 60%;" rowIndexVar="it"
+                                             editable="true" editMode="cell" widgetVar="cellAutor" id="tAutor" emptyMessage="Ingrese los autores">
+                                    <f:facet name="header">
+                                        Autores:
+                                    </f:facet>
+
+                                    <p:column headerText="Nombres">
+                                        <p:cellEditor transient="Nombres">
+                                            <f:facet name="output"><h:outputText value="#{aut.nombres}" /></f:facet>
+                                            <f:facet name="input"><p:inputText id="modelInput" value="#{aut.nombres}" style="width:96%" required="true" requiredMessage="Nombre autor campo requerido"/></f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+
+                                    <p:column headerText="Apellidos">
+                                        <p:cellEditor>
+                                            <f:facet name="output"><h:outputText value="#{aut.apellidos}"/></f:facet>
+                                            <f:facet name="input"><p:inputText value="#{aut.apellidos}" style="width:96%" label="Apellidos" required="true" requiredMessage="Apellido campo requerido"/></f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column style="width:4%;text-align: center">
+                                        <p:commandButton update=":form" ajax="true" icon="ui-icon-circle-close" title="Eliminar"  action="#{documentoControlador.removerAutor(it)}"/>
+                                    </p:column>
+                                </p:dataTable>
+                                <p:commandButton action="#{documentoControlador.crearDocumento}" value="Crear Documento" update=":form" rendered="#{documentoControlador.operacion}"/>
+                                <p:commandButton action="#{documentoControlador.modificarDocumento}" value="Modificar Documento" update=":form" rendered="#{!documentoControlador.operacion}"/>
+                            </p:panel>
+                        </p:tab>
+                    </p:wizard>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

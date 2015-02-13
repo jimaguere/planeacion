@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='iso-8859-1' ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Documento</title>
+        <link href="./../resources/css/default.css" rel="stylesheet" type="text/css" />
+        <meta content='text/html; charset=iso-8859-1' http-equiv="Content-Type"/>
+    </h:head>
+    <body>
+    <p:layout fullPage="true">  
+
+        <p:layoutUnit position="north" size="180" header="Información Documento" resizable="false" closable="false" collapsible="false">   
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Título:"/>
+                    <h:outputText value="#{buscadorControlador.documentoSeleccionado.titulo}"/>
+                    <h:outputText value="Autor:"/>
+                    <h:outputText value="#{buscadorControlador.documentoSeleccionado.autores}"/>
+                    <h:outputText value="Vistos:"/>
+                    <h:outputText value="#{buscadorControlador.documentoSeleccionado.vistos}"/>
+                    <p:button href="./Resultado.xhtml" value="Regresar"/>
+                    <h:panelGroup/>
+                </h:panelGrid>
+            </h:form>
+        </p:layoutUnit>  
+
+        <p:layoutUnit position="east" size="400" header="Documentos Relacionados">
+            <h:form>
+                <p:dataGrid value="#{buscadorControlador.listaDocuementos}" var="doc" columns="1">
+                    <p:panel rendered="#{!(buscadorControlador.documentoSeleccionado.id==doc.id)}">
+                        <h:commandLink title="#{doc.id}" value="#{doc.titulo}" action="#{buscadorControlador.asignarDocumento(doc)}"/>
+                    </p:panel>
+                </p:dataGrid>  
+            </h:form>
+        </p:layoutUnit>  
+
+        <p:layoutUnit position="center">  
+            <hr/>
+            <h:form id="form">
+
+                <h:panelGrid columns="1">   
+                    <center>
+                        <div>
+                            <p:button value="Descargar" href="../resources/pdf/#{buscadorControlador.documentoSeleccionado.id}.pdf"/>
+                            <object type="application/pdf" data="../resources/pdf/#{buscadorControlador.documentoSeleccionado.id}.pdf" width="710px" height="1004px"></object>
+                        </div>
+                    </center>
+                </h:panelGrid>
+                
+            </h:form>
+        </p:layoutUnit> 
+    </p:layout>
+</body>
+</html>
+

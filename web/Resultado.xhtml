@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='iso-8859-1' ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <body>
+    <ui:composition template="./PlantillaResultado.xhtml">
+        <h:head>
+            <meta content='text/html; charset=iso-8859-1' http-equiv="Content-Type"/>
+        </h:head>
+        <ui:define name="top">
+            <h:form id="form1">
+                <p:panel style="height: 100%">
+                    <p:imageSwitch effect="fade"> 
+                        <ui:repeat value="#{imageSwitchBean.images}" var="image">  
+                            <p:graphicImage value="/resources/img/#{image}" height="100%" width="100%" />
+                        </ui:repeat>  
+                    </p:imageSwitch> 
+                    <h:panelGrid columns="3">
+                        <h:selectOneRadio style="height: 50px" value="#{buscadorControlador.tipoBusqueda}">
+                            <f:selectItem itemLabel="Contenido" itemValue="1"/>  
+                            <f:selectItem itemLabel="Título" itemValue="2" />  
+                            <f:selectItem itemLabel="Autor" itemValue="3" />  
+                            <p:ajax update="@form" event="change" process="@this" />
+                        </h:selectOneRadio>   
+
+                        <p:autoComplete  styleClass="buscador"
+                                         label="Buscar"
+                                         size="45"
+                                         completeMethod= "#{buscadorControlador.completeGeneral}"
+                                         value="#{buscadorControlador.cadenaBusqueda}"
+                                         />
+                        <p:commandButton
+                            value="Buscar"
+                            ajax="false"
+                            style="width: 150px"
+                            actionListener="#{buscadorControlador.buscar}"
+                            />
+                        <h:selectOneRadio style="height: 50px" value="#{buscadorControlador.contenido}"  rendered="#{buscadorControlador.tipoBusqueda==1}">
+                            <f:selectItem itemLabel="Frase Completa" itemValue="1"/>  
+                            <f:selectItem itemLabel="Cualquier Palabra" itemValue="2" />  
+                        </h:selectOneRadio> 
+                        <h:panelGroup/>
+                        <h:panelGroup/>
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
+        </ui:define>
+
+        <ui:define name="content">
+            <h:form id="form" style="width:90% ">
+                <p:dataGrid value="#{buscadorControlador.listaDocuementos}" var="item"  paginator="true" columns="1"
+                            rows="5"  emptyMessage="No hay resultados">
+                    <p:panel>
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Título:"/>
+                            <h:commandLink value="#{item.titulo}" 
+                                           title="#{item.id}" 
+                                           action="#{buscadorControlador.asignarDocumento(item)}"
+                                           />
+                            <h:outputText value="Autor(s):"/>
+                            <h:outputText value="#{item.autores}"/>
+                        </h:panelGrid>
+                    </p:panel> 
+                </p:dataGrid>
+
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
+</body>
+</html>
+
+
