@@ -47,4 +47,10 @@ public class DocumentoFacade extends AbstractFacade<Documento> {
         return cq.getResultList();
     }
     
+    public void borrarDocumentos(){
+        try{
+              Query cq = getEntityManager().createNativeQuery("delete from documento");
+              cq.executeUpdate();
+        }catch(Exception e){}
+    } 
 }
