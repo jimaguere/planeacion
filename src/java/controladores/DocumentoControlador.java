@@ -28,7 +28,6 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import org.primefaces.event.FileUploadEvent;
@@ -288,6 +287,7 @@ public class DocumentoControlador {
             for (AutorDto autorDto : this.listaAutor) {
                 this.documento.setAutores(this.documento.getAutores() + "" + autorDto.getNombres() + " " + autorDto.getApellidos() + "\n");
             }
+            this.contenido=this.contenido+" "+this.documento.getAutores();
             docuemntoFacade.create(documento);
             this.documento = docuemntoFacade.findByDocumento(this.documento);
             if (guardarArchivo(documento.getId())) {
@@ -330,6 +330,7 @@ public class DocumentoControlador {
             for (AutorDto autorDto : this.listaAutor) {
                 this.documento.setAutores(this.documento.getAutores() + "" + autorDto.getNombres() + " " + autorDto.getApellidos() + "\n");
             }
+            this.contenido=this.contenido+" "+this.documento.getAutores();
             docuemntoFacade.edit(documento);
             if (guardarArchivo(documento.getId())) {
                 IndexarDocumento index = new IndexarDocumento();
@@ -354,16 +355,16 @@ public class DocumentoControlador {
         }
     }
     
-    public void eliminarDocumento(Documento documento){
+    public void eliminarDocumento(){
         try{
-            this.docuemntoFacade.remove(documento);
+            this.docuemntoFacade.remove(this.documento);
             IndexarDocumento index = new IndexarDocumento();
             index.setDocumento(documento);
             index.eliminarDocumento(ruta);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Documento Eliminado", ""));
         }catch(Exception e){
             FacesContext.getCurrentInstance().
-                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Al Eliminar DOcumento ", ""));
+                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Al Eliminar Documento ", ""));
         }
         
     }
@@ -408,6 +409,10 @@ public class DocumentoControlador {
             }
         }
         cambio = false;
+    }
+    
+    public void prepararEliminarDocumento(Documento documento){
+        this.documento=documento;
     }
 
     public String asignarDocumento(Documento documento) {

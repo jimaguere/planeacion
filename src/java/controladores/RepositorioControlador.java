@@ -4,8 +4,10 @@
  */
 package controladores;
 
+import Dao.DocumentoFacade;
 import clases.IndexarDocumento;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ApplicationScoped;
@@ -24,6 +26,8 @@ public class RepositorioControlador {
      */
     private String rutaOntologia;
     private boolean repositorio;
+    @EJB
+    DocumentoFacade documentoFacade;
 
     public String getRutaOntologia() {
         return rutaOntologia;
@@ -60,6 +64,19 @@ public class RepositorioControlador {
                FacesContext.getCurrentInstance().
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al crear repositorio ", ""));
      
+        }
+    }
+    
+    public void vaciarRepositorio(){
+        try{
+            this.documentoFacade.borrarDocumentos();
+            IndexarDocumento doc=new IndexarDocumento();
+            doc.vaciarRepositorio(rutaOntologia);
+            FacesContext.getCurrentInstance().
+                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Repositorio Limpio ", ""));
+        }catch(Exception e){
+            FacesContext.getCurrentInstance().
+                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al vaciar repositorio ", ""));
         }
     }
     

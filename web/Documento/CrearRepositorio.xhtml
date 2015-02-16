@@ -20,6 +20,10 @@
                                          value="#{repositorioControlador.rutaOntologia}"/>
                             <p:commandButton value="Crear" actionListener="#{repositorioControlador.crearRepositorio}"
                                              update=":form"/>
+                            <p:commandButton value="Limpiar Repositorio" 
+                                             update=":form"
+                                             rendered="#{repositorioControlador.repositorio}"
+                                             actionListener="#{repositorioControlador.vaciarRepositorio}"/>
                             
                         </p:panelGrid>
                     </h:form>

@@ -13,13 +13,13 @@
         <ui:define name="top">
             <h:form id="form1">
                 <p:panel style="height: 100%">
-                    <p:imageSwitch effect="fade"> 
+                    <p:imageSwitch effect="fade" rendered="false"> 
                         <ui:repeat value="#{imageSwitchBean.images}" var="image">  
                             <p:graphicImage value="/resources/img/#{image}" height="100%" width="100%" />
                         </ui:repeat>  
                     </p:imageSwitch> 
-                    <h:panelGrid columns="3">
-                        <h:selectOneRadio style="height: 50px" value="#{buscadorControlador.tipoBusqueda}">
+                    <h:panelGrid columns="2">
+                        <h:selectOneRadio style="height: 50px" value="#{buscadorControlador.tipoBusqueda}" rendered="false">
                             <f:selectItem itemLabel="Contenido" itemValue="1"/>  
                             <f:selectItem itemLabel="Título" itemValue="2" />  
                             <f:selectItem itemLabel="Autor" itemValue="3" />  
