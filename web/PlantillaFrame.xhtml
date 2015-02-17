@@ -13,9 +13,14 @@
         <title>Buscador</title>
     </h:head>
 
+    <h:body rendered="#{!repositorioControlador.repositorio}">
+        <center>
+            <h1>El sitio no esta disponible</h1>
+        </center>
+    </h:body>
 
 
-    <h:body>
+    <h:body rendered="#{repositorioControlador.repositorio}">
         <center>
             <div id="content" class="center_content"><br></br><br></br>
                 <p:panel header="Buscador Maskana" style="width: 80%;height: 100%">

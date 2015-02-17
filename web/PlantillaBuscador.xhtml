@@ -13,7 +13,13 @@
         <title>Buscador</title>
     </h:head>
 
-    <h:body>
+    <h:body rendered="#{!repositorioControlador.repositorio}">
+        <center>
+            <h1>El sitio no esta disponible</h1>
+        </center>
+    </h:body>
+
+    <h:body rendered="#{repositorioControlador.repositorio}">
         <center>
             <p:layout fullPage="false" style="width: 80%;height:500px;">
 
