@@ -14,8 +14,8 @@
      width:100%; 
 }
 .cuerpo{
-    background-color: #0b3e6f;
-    border:0px solid #0b3e6f;background:#0b3e6f url("../img/dia1.png") 50% 50% repeat;color:#ffffff;font-weight:bold;
+    
+    border:0px solid #0b3e6f;color:#ffffff;font-weight:bold;
 }
 #login{
      margin: 5% 0px 0px 0px;
@@ -23,6 +23,6 @@
      height: 100%;
 }
 #contenido{
-     border:0px solid #0b3e6f;background:#0b3e6f url("../img/ima.png") 50% 50% repeat;color:#0b3e6f;font-weight:bold;
+     border:0px solid #0b3e6f;color:#0b3e6f;font-weight:bold;
 }
 

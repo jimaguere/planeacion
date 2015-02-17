@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='iso-8859-1' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -6,7 +6,11 @@
       xmlns:h="http://java.sun.com/jsf/html">
 
     <body>
-
+        
+        <h:head>
+            <meta content='text/html; charset=iso-8859-1' http-equiv="Content-Type"/>
+        </h:head>
+        
         <ui:composition template="./../Plantilla.xhtml">
 
             <ui:define name="content">
@@ -37,18 +41,24 @@
                                         update=":form"
                                         />
                                     <p:dataGrid value="#{documentoControlador.listaDocumentos}" var="item" columns="1" rows="10">
-                                        <p:panel >
+                                        <p:panel>
                                             <h:panelGrid columns="2">
-                                                <h:outputText value="TÃ­tulo:"/>
+                                                <h:outputText value="Título:"/>
                                                 <h:commandLink value="#{item.titulo}" title="#{item.id}" action="#{documentoControlador.asignarDocumento(item)}"/>
                                                 <h:outputText value="Autor(s):"/>
                                                 <h:outputText value="#{item.autores}"/>
+                                                <p:commandButton update=":form" ajax="true" icon="ui-icon-circle-close" title="Eliminar"
+                                                                 actionListener="#{documentoControlador.prepararEliminarDocumento(item)}"
+                                                                 oncomplete="conf.show()"/>
                                             </h:panelGrid>
                                         </p:panel> 
                                     </p:dataGrid>
                                 </h:panelGrid>
                             </div>
                         </center>
+                         <p:dialog  showEffect="fade" hideEffect="explode" widgetVar="conf" header="Esta Seguro?">                        
+                             <p:commandButton value="Aceptar" ajax="true" actionListener="#{documentoControlador.eliminarDocumento}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update=":form"/>                    
+                         </p:dialog>
                     </h:form>
                 </p:panel>
             </ui:define>

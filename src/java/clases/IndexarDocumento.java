@@ -52,6 +52,13 @@ public class IndexarDocumento {
         IndexWriter indice = new IndexWriter(directory, config);
         return indice;
     }
+    
+    public IndexWriter getWriter(String ruta) throws IOException {
+        directory = FSDirectory.open(new File(ruta));
+        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_46, new StandardAnalyzer(Version.LUCENE_46));
+        IndexWriter indice = new IndexWriter(directory, config);
+        return indice;
+    }
 
     public void indexarTexto(String ruta) throws IOException {
         directory = FSDirectory.open(new File(ruta));
@@ -120,6 +127,8 @@ public class IndexarDocumento {
         directory = FSDirectory.open(new File(ruta));
         IndexWriter writer = getWriter();
         writer.deleteDocuments(new Term("id", "" + documento.getId()));
+        writer.close();
+        directory.close();
     }
     
     public void vaciarRepositorio(String ruta) throws IOException{

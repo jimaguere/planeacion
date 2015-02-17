@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='iso-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta content='text/html; charset=iso-8859-1' http-equiv="Content-Type"/>
+    </h:head>
+
+    <body>
+
+        <ui:composition template="./PlantillaFrame.xhtml">
+
+             #{buscadorControlador.iniciar()}
+
+            <ui:define name="content">
+                <h:form id="form">  
+                    <h:panelGrid columns="1">
+                        <p:autoComplete  styleClass="buscador"
+                                         label="Buscar"
+                                         size="45"
+                                         completeMethod= "#{buscadorControlador.completeGeneral}"
+                                         value="#{buscadorControlador.cadenaBusqueda}"
+                                         />
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" rendered="#{buscadorControlador.tipoBusqueda==1}">
+                        <h:outputText value="Buscar Por:" />
+                        <h:selectOneRadio style="height: 50px" value="#{buscadorControlador.contenido}">
+                            <f:selectItem itemLabel="Frase Completa" itemValue="1"/>  
+                            <f:selectItem itemLabel="Cualquier Palabra" itemValue="2" />  
+                        </h:selectOneRadio>  
+                    </h:panelGrid>
+                    <p:commandButton
+                        value="Buscar"
+                        ajax="false"
+                        style="width: 150px"
+                        actionListener="#{buscadorControlador.buscar}"
+                        />
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

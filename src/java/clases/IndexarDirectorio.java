@@ -25,7 +25,7 @@ public class IndexarDirectorio {
         File[] files = dir.listFiles();
         for (int i = 89; i < files.length; i++) {
             File file = files[i];
-            if (file.getName().endsWith(".pdf") && file.length() <= 11930889 && file.getName().contains("67496")) {
+            if (file.getName().endsWith(".pdf") && file.length() <= 11930889 && file.getName().contains("85070")) {
                 System.out.println(i);
                 return;
             }
@@ -38,7 +38,8 @@ public class IndexarDirectorio {
         dir = new File(directorio);
         File[] files = dir.listFiles();
         int contador = 1;
-        for (int i = 1964; i < files.length; i++) {
+        //quedo aqui 85070
+        for (int i = 4278; i < files.length; i++) {
             try {
                 File file = files[i];
                 if (file.getName().endsWith(".pdf") && file.length() <= 11930889) {
@@ -65,10 +66,11 @@ public class IndexarDirectorio {
 
     public static void main(String arg[]) throws IOException, CryptographyException, InvalidPasswordException {
         IndexarDirectorio dir = new IndexarDirectorio();
-        //IndexarDocumento index=new IndexarDocumento();
+        IndexarDocumento index=new IndexarDocumento();
         // index.crearIndice("/opt/indice/");
         // index.cerrar();
-        //dir.recorrerDirectorioArchivo("/opt/documentos pdfs/","/opt/indice/");
+       // dir.recorrerDirectorioArchivo("/opt/documentos pdfs/","/opt/indice/");
+      // System.out.println(index.getWriter("/opt/indice/").maxDoc());
         dir.recorrerDirectorio("/opt/documentos pdfs/", "/opt/indice/");
     }
 }

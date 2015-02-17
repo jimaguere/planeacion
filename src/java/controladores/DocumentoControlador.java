@@ -355,14 +355,20 @@ public class DocumentoControlador {
         }
     }
     
+    public void prepararEliminarDocumento(Documento documento){
+        this.documento=documento;
+    }
+    
     public void eliminarDocumento(){
         try{
             this.docuemntoFacade.remove(this.documento);
             IndexarDocumento index = new IndexarDocumento();
             index.setDocumento(documento);
             index.eliminarDocumento(ruta);
+            iniciar();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Documento Eliminado", ""));
         }catch(Exception e){
+            System.out.println(e.toString());
             FacesContext.getCurrentInstance().
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Al Eliminar Documento ", ""));
         }
@@ -409,10 +415,6 @@ public class DocumentoControlador {
             }
         }
         cambio = false;
-    }
-    
-    public void prepararEliminarDocumento(Documento documento){
-        this.documento=documento;
     }
 
     public String asignarDocumento(Documento documento) {

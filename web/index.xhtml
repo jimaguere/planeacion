@@ -9,9 +9,9 @@
         <meta content='text/html; charset=iso-8859-1' http-equiv="Content-Type"/>
     </h:head>
 
-    <ui:define name="top" rendered="false">
+    <ui:define name="top">
         #{buscadorControlador.iniciar()}
-        <p:imageSwitch effect="fade"> 
+        <p:imageSwitch effect="fade" rendered="true"> 
             <ui:repeat value="#{imageSwitchBean.images}" var="image">  
                 <p:graphicImage value="/resources/img/#{image}" height="100%" width="100%" />
             </ui:repeat>  
