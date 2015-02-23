@@ -122,6 +122,9 @@ public class BuscadorControlador {
                 res = res + " " + listaTitulo[i];
             }
         }
+        if(listaTitulo.length==0){
+            return resul;
+        }
         listaWords = this.vocabularioFacadel.findAllJaroWordsComplet(listaTitulo[listaTitulo.length - 1]);
         if (listaWords.isEmpty()) {
             return resul;
