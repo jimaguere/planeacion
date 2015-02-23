@@ -115,15 +115,15 @@ public class BuscadorControlador {
         List<Object[]> listaWords;
         String[] listaTitulo = query.split(" ");
         String res = "";
+        if(listaTitulo.length==0){
+            return resul;
+        }
         for (int i = 0; i < listaTitulo.length - 1; i++) {
             if (i == 0) {
                 res = listaTitulo[i];
             } else {
                 res = res + " " + listaTitulo[i];
             }
-        }
-        if(listaTitulo.length==0){
-            return resul;
         }
         listaWords = this.vocabularioFacadel.findAllJaroWordsComplet(listaTitulo[listaTitulo.length - 1]);
         if (listaWords.isEmpty()) {
