@@ -38,16 +38,17 @@ public class IndexarDirectorio {
         dir = new File(directorio);
         File[] files = dir.listFiles();
         int contador = 1;
-        //quedo aqui 86499
-        for (int i = 6538; i < files.length; i++) {
+        String idNoIndexados="";
+        //quedo aqui 84749
+        for (int i = 307; i < files.length; i++) {
             try {
                 File file = files[i];
-                if (file.getName().endsWith(".pdf") && file.length() > 11930889) {
+                if (file.getName().endsWith(".pdf")) {
                     IndexarDocumento indiceArchivos = new IndexarDocumento();
                     long inicioConexion = System.currentTimeMillis();
                     InputStream archivoI = new FileInputStream(file);
                     long finConexion = System.currentTimeMillis();
-                    System.out.println("inputStream en:" + (finConexion - inicioConexion));
+                   // System.out.println("inputStream en:" + (finConexion - inicioConexion));
                     ExtracPdfText texto = new ExtracPdfText(archivoI);
                     Documento doc = new Documento();
                     doc.setId(Integer.parseInt(file.getName().substring(0, file.getName().lastIndexOf(".")).replaceAll(" ", "").trim()));
@@ -62,18 +63,21 @@ public class IndexarDirectorio {
                     contador++;
                 }
             } catch (Exception e) {
+                idNoIndexados=idNoIndexados+files[i].getName()+"____"+e.toString()+"\n";
             }
         }
+        System.out.println("archivos No indexados");
+        System.out.println(idNoIndexados);
 
     }
 
     public static void main(String arg[]) throws IOException, CryptographyException, InvalidPasswordException {
         IndexarDirectorio dir = new IndexarDirectorio();
         IndexarDocumento index = new IndexarDocumento();
-        // index.crearIndice("/opt/indice/");
-        // index.cerrar();
+        //index.crearIndice("/opt/indice_espaniol/");
+        //index.cerrar();
         // dir.recorrerDirectorioArchivo("/opt/documentos pdfs/","/opt/indice/");
-        System.out.println(index.getWriter("/opt/indice/").maxDoc());
-        //dir.recorrerDirectorio("/opt/documentos pdfs/", "/opt/indice/");
+        //System.out.println(index.getWriter("/opt/indice_espaniol/").maxDoc());
+        dir.recorrerDirectorio("/opt/documentos pdfs/", "/opt/indice_espaniol/");
     }
 }

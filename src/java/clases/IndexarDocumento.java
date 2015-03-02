@@ -7,6 +7,7 @@ package clases;
 import entidad.Documento;
 import java.io.File;
 import java.io.IOException;
+import org.apache.lucene.analysis.es.SpanishAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -48,19 +49,20 @@ public class IndexarDocumento {
 
 
     private IndexWriter getWriter() throws IOException {
-        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_46, new StandardAnalyzer(Version.LUCENE_46));
+        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_46, new SpanishAnalyzer(Version.LUCENE_46));
         IndexWriter indice = new IndexWriter(directory, config);
         return indice;
     }
     
     public IndexWriter getWriter(String ruta) throws IOException {
         directory = FSDirectory.open(new File(ruta));
-        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_46, new StandardAnalyzer(Version.LUCENE_46));
+        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_46, new SpanishAnalyzer(Version.LUCENE_46));
         IndexWriter indice = new IndexWriter(directory, config);
         return indice;
     }
 
     public void indexarTexto(String ruta) throws IOException {
+        
         directory = FSDirectory.open(new File(ruta));
         IndexWriter writer = getWriter();
         Document doc = new Document();
